@@ -1,6 +1,5 @@
 // config/falAI.js
-const SERVER_URL = import.meta.env.VITE_SERVER_URL || 'http://localhost:5000';
-
+const SERVER_URL = import.meta.env.VITE_SERVER_URL || 'https://designstudio-backend.onrender.com';
 // Get available AI services
 export const getAIServices = async () => {
   try {
