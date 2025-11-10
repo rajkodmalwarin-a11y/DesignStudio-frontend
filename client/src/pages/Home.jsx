@@ -1,6 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase/firebase";
+
 import { 
   Zap, 
   Palette, 
@@ -19,6 +22,15 @@ import {
 
 const Home = () => {
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/"); // or "/" if Auth page is at root
+    } catch (error) {
+      console.error("Logout failed:", error.message);
+    }
+  };
 
   const features = [
     {
@@ -155,12 +167,21 @@ const Home = () => {
               <a href="#products" className="text-gray-300 hover:text-white transition-colors">Products</a>
             </div>
             
-            <button
-              onClick={handleStartCreating}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
-            >
-              Start Creating
-            </button>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={handleStartCreating}
+                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                Start Creating
+              </button>
+              
+              <button
+                onClick={handleLogout}
+                className="border-2 border-red-500 text-red-400 px-5 py-2 rounded-xl font-semibold hover:bg-red-500 hover:text-white transition-all transform hover:scale-105 shadow-lg"
+              >
+                Logout
+              </button>
+            </div>
           </div>
         </div>
       </nav>
